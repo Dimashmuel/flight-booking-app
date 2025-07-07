@@ -61,3 +61,4 @@ npm start
 
 ## Author
 Project created as part of a DevOps course final assignment.
+Dima Shmuel 310782164
