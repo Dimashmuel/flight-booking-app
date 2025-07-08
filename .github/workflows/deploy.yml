@@ -48,10 +48,14 @@ jobs:
         working-directory: flight-frontend
         run: npm run build
 
+      - name: Install Cypress binary
+        working-directory: flight-frontend
+        run: npx cypress install
+
       - name: Start frontend server in background
         working-directory: flight-frontend
         run: |
-          npm run start &
+          HOST=0.0.0.0 PORT=3000 npm start &
           sleep 15
 
       - name: Check if frontend is up
