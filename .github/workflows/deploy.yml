@@ -50,7 +50,7 @@ jobs:
         run: npm install --save-dev cypress
 
       - name: Start frontend server
-        working_directory: flight-frontend
+        working-directory: flight-frontend
         run: nohup npm start > /dev/null 2>&1 &
         
       - name: Wait for frontend to be ready
