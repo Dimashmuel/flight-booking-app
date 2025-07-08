@@ -9,6 +9,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      CI: true  # Enable headless Cypress mode
+
     services:
       postgres:
         image: postgres:13
@@ -45,14 +48,23 @@ jobs:
         working-directory: flight-frontend
         run: npm run build
 
-      - name: Run Cypress tests (with server)
+      - name: Start frontend server in background
         working-directory: flight-frontend
-        run: npx start-server-and-test start http://localhost:3000 'npx cypress run'
+        run: |
+          npm run start &
+          sleep 15
+
+      - name: Check if frontend is up
+        run: curl -f http://localhost:3000
+
+      - name: Run Cypress tests manually
+        working-directory: flight-frontend
+        run: npx cypress run
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.13.3
+          python-version: 3.11
 
       - name: Install backend dependencies
         working-directory: flight_backend
