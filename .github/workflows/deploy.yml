@@ -37,9 +37,21 @@ jobs:
         working-directory: flight-frontend
         run: npm install
 
+      - name: Run frontend tests (Jest)
+        working-directory: flight-frontend
+        run: npm test -- --watchAll=false
+
       - name: Build frontend
         working-directory: flight-frontend
         run: npm run build
+
+      - name: Install Cypress
+        working-directory: flight-frontend
+        run: npm install --save-dev cypress
+
+      - name: Run Cypress E2E tests
+        working-directory: flight-frontend
+        run: npx cypress run
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -55,3 +67,5 @@ jobs:
       - name: Run backend tests
         working-directory: flight_backend
         run: python manage.py test
+
+
