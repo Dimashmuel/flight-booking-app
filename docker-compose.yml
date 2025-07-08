@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  frontend:
+    build: ./flight-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./flight_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./flight_backend:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: flightdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
