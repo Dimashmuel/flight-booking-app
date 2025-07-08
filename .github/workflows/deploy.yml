@@ -53,8 +53,11 @@ jobs:
         working-directory: flight-frontend
         run: nohup npm start > /dev/null 2>&1 &
         
+      - name: Install wait-on
+        run: npm install -g wait-on
+
       - name: Wait for frontend to be ready
-        run: sleep 10
+        run: wait-on http://localhost:3000
 
       - name: Run Cypress E2E tests
         working-directory: flight-frontend
