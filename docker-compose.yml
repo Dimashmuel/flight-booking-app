@@ -1,32 +1,32 @@
-version: '3.9'
+version: '3.9'  # Use Docker Compose specification version 3.9
 
 services:
   frontend:
-    build: ./flight-frontend
+    build: ./flight-frontend  # Build the frontend from its Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Map container port 3000 to host port 3000
     depends_on:
-      - backend
+      - backend  # Wait until backend is up before starting frontend
 
   backend:
-    build: ./flight_backend
+    build: ./flight_backend  # Build the backend from its Dockerfile
     ports:
-      - "8000:8000"
+      - "8000:8000"  # Expose Django development server
     volumes:
-      - ./flight_backend:/app
+      - ./flight_backend:/app  # Mount the backend code for live development
     depends_on:
-      - db
+      - db  # Wait until database is up before starting backend
 
   db:
-    image: postgres:13
+    image: postgres:13  # Use official PostgreSQL version 13
     environment:
-      POSTGRES_DB: flightdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: flightdb           # Database name
+      POSTGRES_USER: user             # Username
+      POSTGRES_PASSWORD: password     # Password
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Expose PostgreSQL port
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data  # Persist PostgreSQL data
 
 volumes:
-  pgdata:
+  pgdata:  # Named volume to store PostgreSQL data outside the container

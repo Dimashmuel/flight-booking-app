@@ -1,20 +1,22 @@
+# GitHub Actions CI/CD pipeline for the Flight Booking App
+# Triggers on every push to the main branch
 name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger pipeline on push to 'main' branch
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use latest Ubuntu runner
 
     env:
-      CI: true  # Enable headless Cypress mode
+      CI: true  # Enable headless mode for Cypress tests
 
     services:
       postgres:
-        image: postgres:13
+        image: postgres:13  # PostgreSQL service for the backend
         env:
           POSTGRES_DB: flightdb
           POSTGRES_USER: user
@@ -25,16 +27,16 @@ jobs:
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 5  # Ensure PostgreSQL is healthy before continuing
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # Pull the repository content
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18  # Use Node.js version 18
 
       - name: Install frontend dependencies
         working-directory: flight-frontend
@@ -42,40 +44,40 @@ jobs:
 
       - name: Run frontend tests (Jest)
         working-directory: flight-frontend
-        run: npm test -- --watchAll=false
+        run: npm test -- --watchAll=false  # Run unit tests without watch mode
 
       - name: Build frontend
         working-directory: flight-frontend
-        run: npm run build
+        run: npm run build  # Build the React frontend
 
       - name: Install Cypress binary
         working-directory: flight-frontend
-        run: npx cypress install
+        run: npx cypress install  # Install Cypress for E2E testing
 
       - name: Start frontend server in background
         working-directory: flight-frontend
         run: |
-          HOST=0.0.0.0 PORT=3000 npm start &
-          sleep 15
+          HOST=0.0.0.0 PORT=3000 npm start &  # Start app in background
+          sleep 15  # Give the server time to start
 
       - name: Check if frontend is up
-        run: curl -f http://localhost:3000
+        run: curl -f http://localhost:3000  # Fail if frontend isn't accessible
 
       - name: Run Cypress tests manually
         working-directory: flight-frontend
-        run: npx cypress run
+        run: npx cypress run  # Run E2E Cypress tests
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: 3.11  # Set up Python 3.11 for Django backend
 
       - name: Install backend dependencies
         working-directory: flight_backend
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt  # Install Django and related packages
 
       - name: Run backend tests
         working-directory: flight_backend
-        run: python manage.py test
+        run: python manage.py test  # Run Django test suite

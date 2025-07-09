@@ -1,6 +1,17 @@
 asgiref==3.8.1
+# ASGI interface reference implementation used by Django for asynchronous support
+
 Django==5.2.3
+# Main Django web framework – provides ORM, routing, templating, admin panel, etc.
+
 django-cors-headers==4.7.0
+# Middleware that allows handling Cross-Origin Resource Sharing (CORS), useful for enabling communication between frontend and backend
+
 djangorestframework==3.16.0
+# Django REST Framework (DRF) – used to create RESTful APIs with Django
+
 sqlparse==0.5.3
+# A non-validating SQL parser – used internally by Django for formatting SQL queries
+
 tzdata==2025.2
+# Timezone data package – ensures correct time zone behavior in environments where system time zone info is unavailable (like some Docker containers)
