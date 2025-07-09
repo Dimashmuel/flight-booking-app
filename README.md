@@ -69,6 +69,12 @@ Then visit:
 Frontend: http://localhost:3000
 Backend: http://localhost:8000
 
+### Tests
+Frontend Unit Tests (React + Jest)
+Backend Tests (Django)
+End-to-End (E2E) Tests (Cypress)
+All tests (unit, backend, and E2E) are automatically run on every push to main using GitHub Actions
+
 
 ## Usage
 - Open browser at: http://localhost:3000
