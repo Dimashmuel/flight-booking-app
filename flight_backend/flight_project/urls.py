@@ -2,6 +2,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # Admin panel route (e.g., /admin/)
     path('admin/', admin.site.urls),
-    path('api/', include('flights.urls')),  
+
+    # API routes from the flights app, accessible via /api/
+    path('api/', include('flights.urls')),
 ]
