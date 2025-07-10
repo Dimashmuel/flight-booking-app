@@ -95,3 +95,4 @@ All tests (unit, backend, and E2E) are automatically run on every push to main u
 Project created as part of a DevOps course final assignment.
 Dima Shmuel 310782164
 Nikita Mekler 213066020
+Samamon tagania 319543187
